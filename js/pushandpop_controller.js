@@ -10,14 +10,12 @@ class PushandpopController extends Stimulus.Controller {
 
 
   load() {
-    console.log("Inside load")
     var ourRequest = new XMLHttpRequest();
     ourRequest.open('GET', 'https://shubham1010.github.io/jsonfiles/ex01.json')
-    console.log("Before load")
+    
     ourRequest.onload = ()=> {
       var data = JSON.parse(ourRequest.responseText)
-      console.log(data)
-
+      
       var id;
       var name;
       var imgurl;
