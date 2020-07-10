@@ -4,4 +4,4 @@ This is mini project about moving data from one section to another using click a
 
 ### Live Demo 
 
-[Click Here] (https://shubham1010.github.io/split-window/)
+[Click Here](https://shubham1010.github.io/split-window/)
