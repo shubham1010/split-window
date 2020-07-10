@@ -1,0 +1,102 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+}
+
+
+.split {
+  height: 100%;
+  width: 50%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.left {
+  left: 0;
+  background-color: red;
+}
+
+.right {
+  right: 0;
+  background-color: blue;
+}
+
+
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+/*
+button {
+    background-color: black;
+    font-size: 25px;
+    border: none;
+    color: white;
+    padding: 18px 36px;
+    text-decoration: none;
+    margin: 5px 4px;
+    border-radius: 2px;
+    cursor: pointer;
+    position: fixed;
+}
+*/
+
+button {
+  background-color: black;
+  border: white;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  border-radius: 8px;
+  position: fixed;
+}
+
+/*
+img {
+  height:100%;
+  width:100%;
+  object-fit: contain;
+  margin-top: 10px;
+}
+*/
+
+.main{
+  border: 2px solid #dddddd;
+}
+
+.info {
+  display: solid;
+  border: 2px solid black;
+  margin: 80px;
+  padding: 10px;
+}
+
+input[type=checkbox] {
+  width: 40px;
+  height: 40px;
+}
+
+img {
+  border: 2px solid #dddddd;
+  border-radius: 4px;
+  width: 100px;
+  margin-top: 10px;
+}
+
+.ourleft {
+  display: solid;
+}
+
+.ourright {
+  display: solid;
+}
