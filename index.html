@@ -2,6 +2,7 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <script src="https://unpkg.com/stimulus/dist/stimulus.umd.js"></script>  
   <script type="text/javascript" src="./js/pushandpop_controller.js"></script>
@@ -10,9 +11,12 @@
 
   <div data-controller="pushandpop" class="main">
     <div class="split left">
-        <button data-action="click->pushandpop#pushFromLeft" data-target="pushandpop.leftbutton">Push -></button>
-      <center><h1>Left Section</h1>
+        <button class="btn" data-action="click->pushandpop#pushFromLeft" data-target="pushandpop.leftbutton">Push -></button>
+        <div class="buttons">
+          <button class="btn" data-action="click->pushandpop#downloadLeftItems"><i class="fa fa-download"></i> </button>
+        </div>
 
+        <center><h1>Left Section</h1>
         <div data-target="pushandpop.leftsection" class="ourleft">
         </div>
 
@@ -20,7 +24,12 @@
     </div>
 
     <div class="split right">
-        <button data-action="click->pushandpop#popFromRight" data-target="pushandpop.rightbutton"><- Push</button>
+        <button class="btn" data-action="click->pushandpop#popFromRight" data-target="pushandpop.rightbutton"><- Push</button>
+
+        <div class="buttons">
+          <button class="btn" data-action="click->pushandpop#downloadRightItems"><i class="fa fa-download"></i> </button>
+        </div>
+
 
       <center><h1>Right Section</h1>
         <div data-target="pushandpop.rightsection" class="ourright">

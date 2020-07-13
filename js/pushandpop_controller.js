@@ -26,7 +26,7 @@ class PushandpopController extends Stimulus.Controller {
         imgurl = data[i].imgurl
 
 
-        const html = `<div id=${id} class="info" draggable="true" data-action="dragstart->pushandpop#dragStart"><input type="checkbox"/><h2>${id}</h2><h2>${name}</h2><a><a target="_blank" href=${imgurl}><img src=${imgurl} /></a></div>`
+        const html = `<div id=${id} class="info" draggable="true" data-action="dragstart->pushandpop#dragStart"><input type="checkbox"/><h2>${id}</h2><h2>${name}</h2><a target="_blank" href=${imgurl}><img src=${imgurl} /></a></div>`
 
         this.leftsectionTarget.innerHTML += html
 
@@ -256,6 +256,68 @@ class PushandpopController extends Stimulus.Controller {
     })
 
   }
+
+  downloadLeftItems(){  
+    console.log("Downloading left items...")
+    const allLeftDiv = this.leftsectionTarget.querySelectorAll("div")
+    var jsonObject = this.getDataIntoArray(allLeftDiv);
+
+    if (jsonObject.length === 0) {
+      alert("Left section is empty, downloading cancelled");
+      return
+    }
+
+
+    var string = JSON.stringify(jsonObject)
+    this.download("leftsection.json", string)
+
+  }  
+
+
+  downloadRightItems(){
+    console.log("Downloading right items...")
+    const allRightDiv = this.rightsectionTarget.querySelectorAll("div")
+    var jsonObject = this.getDataIntoArray(allRightDiv);
+    if (jsonObject.length === 0) {
+      alert("Right section is empty, downloading cancelled");
+      return
+    }
+
+    var string = JSON.stringify(jsonObject)
+    this.download("rightsection.json", string)
+
+  }
+
+  getDataIntoArray(section) {
+    var array = []
+
+    for(var i=0; i<section.length; i++) {
+      const node = section[i].childNodes
+      var id = parseInt(node[1].innerHTML)
+      var name = node[2].innerHTML
+      var imgurl = node[3].href
+
+      array.push({"id":id, "name":name, "imgurl":imgurl})
+      
+    }
+    return array
+  }
+
+
+  download(filename, text) {
+    var element = document.createElement('a') 
+    element.style.display = 'none'
+
+    element.setAttribute('href','data:text/json;charset=utf-8,'+ encodeURIComponent(text))
+
+    element.setAttribute("download", filename)
+    document.body.appendChild(element)
+
+    element.click()
+
+    document.body.removeChild(element)
+  }
+
 }
 
 const application = Stimulus.Application.start()
