@@ -11,7 +11,7 @@
 
   <div data-controller="pushandpop" class="main">
     <div class="split left">
-        <button class="btn" data-action="click->pushandpop#pushFromLeft" data-target="pushandpop.leftbutton">Push -></button>
+        <button data-action="click->pushandpop#pushFromLeft" data-target="pushandpop.leftbutton">Push -></button>
         <div class="buttons">
           <button class="btn" data-action="click->pushandpop#downloadLeftItems"><i class="fa fa-download"></i> </button>
         </div>
@@ -24,7 +24,7 @@
     </div>
 
     <div class="split right">
-        <button class="btn" data-action="click->pushandpop#popFromRight" data-target="pushandpop.rightbutton"><- Push</button>
+        <button data-action="click->pushandpop#popFromRight" data-target="pushandpop.rightbutton"><- Push</button>
 
         <div class="buttons">
           <button class="btn" data-action="click->pushandpop#downloadRightItems"><i class="fa fa-download"></i> </button>
