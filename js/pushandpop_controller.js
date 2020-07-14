@@ -185,9 +185,10 @@ class PushandpopController extends Stimulus.Controller {
       // getting leftsection and rightsection target element using class
       let leftside = document.querySelector(".ourleft");
       let rightside = document.querySelector(".ourright");
-
+     
       
       if (droppable11 || droppable12) { // left side drop
+
         if (leftside.childNodes.length === 1) {
           leftside.appendChild(document.getElementById(srcId));
         }
@@ -269,10 +270,41 @@ class PushandpopController extends Stimulus.Controller {
 
 
     var string = JSON.stringify(jsonObject)
+    console.log(string)
+    string = this.modifyString(string)
     this.download("leftsection.json", string)
 
   }  
 
+  modifyString(string) {
+    var newstring = ""
+    var index = 0
+    while (index < string.length) {
+      if (string[index]==='{') {
+        newstring += '\n'
+        newstring += string[index]
+        newstring += "\n    "
+      }
+      else if (string[index]==='}') {
+        newstring += '\n'
+        newstring += string[index]
+      }
+      else if(string[index]===',' && string[index+1]==='"') {
+        newstring += string[index]
+        newstring += "\n    "
+      }
+      else if (string[index]===']') {
+        newstring += '\n'
+        newstring += string[index]
+      }
+      else{
+        newstring += string[index]
+      }
+      index += 1
+    }
+    return newstring 
+
+  }
 
   downloadRightItems(){
     console.log("Downloading right items...")
@@ -284,20 +316,26 @@ class PushandpopController extends Stimulus.Controller {
     }
 
     var string = JSON.stringify(jsonObject)
+    console.log(string)
+    string = this.modifyString(string)
     this.download("rightsection.json", string)
 
   }
 
   getDataIntoArray(section) {
     var array = []
-
+    var string = ""
     for(var i=0; i<section.length; i++) {
       const node = section[i].childNodes
       var id = parseInt(node[1].innerHTML)
       var name = node[2].innerHTML
       var imgurl = node[3].href
 
-      array.push({"id":id, "name":name, "imgurl":imgurl})
+      array.push({
+      "id":id, 
+      "name":name, 
+      "imgurl":imgurl
+      })
       
     }
     return array
