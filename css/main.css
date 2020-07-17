@@ -64,6 +64,11 @@ button {
   cursor: pointer;
 }
 
+button:hover {
+  background-color: white;
+  color: black;
+}
+
 
 .main{
   border: 2px solid #dddddd;
