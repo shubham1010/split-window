@@ -52,12 +52,13 @@ class PushandpopController extends Stimulus.Controller {
 
   pushFromLeft() {
     const allLeftDiv = this.leftsectionTarget.querySelectorAll("div")
+    const allLeftSpan = this.leftheadersTarget.querySelectorAll("span")
 
-    var IDs = this.getIDArray(allLeftDiv);
+    var IDs = this.getIDArray(allLeftDiv, "id");
 
     var counter = 0;
     for(var i=0 ; i<IDs.length ; i++) {
-      counter += this.shiftToRightSelected(IDs[i]);
+      counter += this.shiftToRightSelected(IDs[i], allLeftSpan[i]);
     }
     if (counter == 1) {
       alert(counter + " item is shifted from left section to right section");
@@ -69,26 +70,27 @@ class PushandpopController extends Stimulus.Controller {
   }
 
   // shift selected item from left to right
-  shiftToRightSelected(id) {
+  shiftToRightSelected(id, spanItem) {
 
     var item =  document.getElementById(id);
     var check = item.querySelector("input[type=checkbox]")
     if (check.checked) { // selected element found
       check.checked = false;
-      this.adjustingRightSide(item, id);
+      this.adjustingRightSide(item, id, spanItem);
       return 1;
     }
 
     return 0;
   }
 
-  adjustingRightSide(item, id) {
+  adjustingRightSide(item, id, spanItem) {
     const allRightDiv = this.rightsectionTarget.querySelectorAll("div") ;
 
-    var array = this.getIDArray(allRightDiv);
-
+    var array = this.getIDArray(allRightDiv, "id");
+    
     if (array.length == 1) {
       this.rightsectionTarget.appendChild(item);
+      this.rightheadersTarget.appendChild(spanItem)
     }
     else {
       for(var position=0 ; position<array.length ; position++) {
@@ -97,22 +99,26 @@ class PushandpopController extends Stimulus.Controller {
         }
       }
       if (position === array.length) {
+        this.rightheadersTarget.appendChild(spanItem)
         this.rightsectionTarget.appendChild(item);
       }
       else {
         this.rightsectionTarget.insertBefore(item, this.rightsectionTarget.childNodes[position+1]);
+        this.rightheadersTarget.insertBefore(spanItem, this.rightheadersTarget.childNodes[position+1]);
       }
     }
 
   }
 
+
   popFromRight() {
     const allRightDiv = this.rightsectionTarget.querySelectorAll("div") ;
 
-    var IDs = this.getIDArray(allRightDiv);
+    const allRightSpan = this.rightheadersTarget.querySelectorAll("span")
+    var IDs = this.getIDArray(allRightDiv, "id");
     var counter = 0;
     for(var i=0 ; i<IDs.length ; i++) {
-      counter += this.shiftToLeftSelected(IDs[i]);
+      counter += this.shiftToLeftSelected(IDs[i], allRightSpan[i]);
     }
     if (counter == 1) {
       alert(counter + " item is shifted from right section to left section");
@@ -124,13 +130,13 @@ class PushandpopController extends Stimulus.Controller {
 
 
   // shift selected item from right to left
-  shiftToLeftSelected(id) {
+  shiftToLeftSelected(id, spanItem) {
 
     var item =  document.getElementById(id);
     var check = item.querySelector("input[type=checkbox]")
     if (check.checked) { // selected element found
       check.checked = false;
-      this.adjustingLeftSide(item, id);
+      this.adjustingLeftSide(item, id, spanItem);
       return 1;
     }
 
@@ -139,13 +145,14 @@ class PushandpopController extends Stimulus.Controller {
 
   // maintaining the order when element moves from 
   // right side to left side
-  adjustingLeftSide(item, id) {
+  adjustingLeftSide(item, id, spanItem) {
     const allLeftDiv = this.leftsectionTarget.querySelectorAll("div") ;
 
-    var array = this.getIDArray(allLeftDiv);
+    var array = this.getIDArray(allLeftDiv, "id");
 
     if (array.length == 1) {
       this.leftsectionTarget.appendChild(item);
+      this.leftheadersTarget.appendChild(spanItem);
     }
     else {
       for(var position=0 ; position<array.length ; position++) {
@@ -155,21 +162,23 @@ class PushandpopController extends Stimulus.Controller {
       }
       if (position === array.length) {
         this.leftsectionTarget.appendChild(item);
+        this.leftheadersTarget.appendChild(spanItem);
       }
       else {
         this.leftsectionTarget.insertBefore(item, this.leftsectionTarget.childNodes[position+1]);
+        this.leftheadersTarget.insertBefore(spanItem, this.leftheadersTarget.childNodes[position+1]);
       }
     }
   }
 
   // getting array which contains ID's of items in given DOM element as parameter
-  getIDArray(divs) {
+  getIDArray(divs, attrName) {
     if (divs === null) {
       return [];
     }
     const array = [];
     for(var i=0; i<divs.length ; i++) {
-      const id = divs[i].getAttribute("id");
+      const id = divs[i].getAttribute(attrName);
       array.push(id);
     }
     return array;
