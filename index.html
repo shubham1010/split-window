@@ -6,7 +6,10 @@
 
   <script src="https://unpkg.com/stimulus/dist/stimulus.umd.js"></script>  
   <script type="text/javascript" src="./js/pushandpop_controller.js"></script>
+  <script type="text/javascript" src="./js/goto_controller.js"></script>
+  <script type="text/javascript" src="./js/draganddrop_controller.js"></script>
 </head>
+<title> Split Window</title>
 <body>
 
   <div data-controller="pushandpop" class="main">
@@ -17,6 +20,8 @@
         </div>
 
         <center><h1>Left Section</h1>
+        <div data-target="pushandpop.leftheaders" class="thumbnailsleft"> 
+        </div>
         <div data-target="pushandpop.leftsection" class="ourleft">
         </div>
 
@@ -32,6 +37,10 @@
 
 
       <center><h1>Right Section</h1>
+
+
+        <div data-target="pushandpop.rightheaders" class="thumbnailsright">
+        </div>
         <div data-target="pushandpop.rightsection" class="ourright">
         </div>
       </center>

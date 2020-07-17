@@ -1,6 +1,6 @@
 class PushandpopController extends Stimulus.Controller {
   static get targets() {
-    return ["rightsection", "leftsection", "leftbutton", "rightbutton"]
+    return ["rightsection", "leftsection", "leftheaders", "rightheaders"]
   }
  
 
@@ -20,13 +20,24 @@ class PushandpopController extends Stimulus.Controller {
       var name;
       var imgurl;
 
+
+      for(var i=0; i<data.length; i++) {
+        id = data[i].id;
+        imgurl = data[i].imgurl        
+        const html = `<span draggable="true" data-controller="draganddrop" data-action="dragstart->draganddrop#dragStart" data-draganddrop-id="${id}"><a data-controller="goto" data-goto-link="${id}" data-action="click->goto#gotoLink"><img src=${imgurl} /></a></span>`
+
+        this.leftheadersTarget.innerHTML += html
+      }
+
+
+
       for(var i=0; i<data.length ; i++) {
         id = data[i].id;
         name = data[i].name;
         imgurl = data[i].imgurl
 
 
-        const html = `<div id=${id} class="info" draggable="true" data-action="dragstart->pushandpop#dragStart"><input type="checkbox"/><h2>${id}</h2><h2>${name}</h2><a target="_blank" href=${imgurl}><img src=${imgurl} /></a></div>`
+        const html = `<div id=${id} data-controller="draganddrop" class="info" draggable="true" data-action="dragstart->draganddrop#dragStart"><input type="checkbox"/><h2>${id}</h2><h2>${name}</h2><a target="_blank" href=${imgurl}><img src=${imgurl} /></a></div>`
 
         this.leftsectionTarget.innerHTML += html
 
@@ -37,6 +48,7 @@ class PushandpopController extends Stimulus.Controller {
 
     ourRequest.send()
   }
+
 
   pushFromLeft() {
     const allLeftDiv = this.leftsectionTarget.querySelectorAll("div")
@@ -163,103 +175,7 @@ class PushandpopController extends Stimulus.Controller {
     return array;
   }
 
-  dragStart(event) {
-    var dropTarget = document.querySelector(".main");
-    event.dataTransfer.setData("srcId",event.target.id);
-
-    dropTarget.addEventListener("dragover", (event)=> {
-      event.preventDefault();
-    })
-
-    dropTarget.addEventListener("drop", (event) => {
-      let target = event.target;
-      let srcId = event.dataTransfer.getData("srcId");
-      event.preventDefault();
-
-      // possible region to drop item
-      let droppable11 = target.classList.contains("left");
-      let droppable12 = target.classList.contains("ourleft");
-      let droppable21 = target.classList.contains("right");
-      let droppable22 = target.classList.contains("ourright");
-
-      // getting leftsection and rightsection target element using class
-      let leftside = document.querySelector(".ourleft");
-      let rightside = document.querySelector(".ourright");
-     
-      
-      if (droppable11 || droppable12) { // left side drop
-
-        if (leftside.childNodes.length === 1) {
-          leftside.appendChild(document.getElementById(srcId));
-        }
-        else {
-
-          const allLeftDiv = leftside.querySelectorAll("div") ;
-          const array = [];
-          for(var i=0; i<allLeftDiv.length ; i++) {
-            const id = allLeftDiv[i].getAttribute("id");
-            array.push(id);
-          }
-
-          if (array.length === 1) {
-            leftside.appendChild(document.getElementById(srcId));
-          }
-          else {
-            for(var position=0 ; position<array.length ; position++) {
-              if (Number(array[position]) > Number(srcId)) {
-                break;
-              }
-            }
-            if (position === array.length) {
-              leftside.appendChild(document.getElementById(srcId));
-            }
-            else {
-              leftside.insertBefore(document.getElementById(srcId), leftside.childNodes[position+1]);
-            }
-          }
-
-        }
-      }
-
-
-      if (droppable21 || droppable22) { // right side drop
-        if(rightside.childNodes.length === 1) {
-        rightside.appendChild(document.getElementById(srcId));
-        }
-        else {
-          const allRightDiv = rightside.querySelectorAll("div") ;
-          const array = [];
-          for(var i=0; i<allRightDiv.length ; i++) {
-            const id = allRightDiv[i].getAttribute("id");
-            array.push(id);
-          }
-
-
-          if (array.length === 1) {
-            rightside.appendChild(document.getElementById(srcId));
-          }
-          else {
-            for(var position=0 ; position<array.length ; position++) {
-              if (Number(array[position]) > Number(srcId)) {
-                break;
-              }
-            }
-            if (position === array.length) {
-              rightside.appendChild(document.getElementById(srcId));
-            }
-            else {
-              rightside.insertBefore(document.getElementById(srcId), rightside.childNodes[position+1]);
-            }
-          }
-        }
-      }
-
-    })
-
-  }
-
   downloadLeftItems(){  
-    console.log("Downloading left items...")
     const allLeftDiv = this.leftsectionTarget.querySelectorAll("div")
     var jsonObject = this.getDataIntoArray(allLeftDiv);
 
@@ -270,7 +186,6 @@ class PushandpopController extends Stimulus.Controller {
 
 
     var string = JSON.stringify(jsonObject)
-    console.log(string)
     string = this.modifyString(string)
     this.download("leftsection.json", string)
 
@@ -307,7 +222,6 @@ class PushandpopController extends Stimulus.Controller {
   }
 
   downloadRightItems(){
-    console.log("Downloading right items...")
     const allRightDiv = this.rightsectionTarget.querySelectorAll("div")
     var jsonObject = this.getDataIntoArray(allRightDiv);
     if (jsonObject.length === 0) {
@@ -316,7 +230,6 @@ class PushandpopController extends Stimulus.Controller {
     }
 
     var string = JSON.stringify(jsonObject)
-    console.log(string)
     string = this.modifyString(string)
     this.download("rightsection.json", string)
 
