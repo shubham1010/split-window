@@ -61,7 +61,9 @@ button {
   position: fixed;
   font-size: 15px;
   font-weight: bold;
+  cursor: pointer;
 }
+
 
 .main{
   border: 2px solid #dddddd;
@@ -126,4 +128,14 @@ input[type=checkbox] {
   color: black;
 }
 
+.top {
+  bottom:0;
+  border-radius: 50px;
+  font-size: 20px;
+}
+
+.top:hover {
+  background-color: white;
+  color: black;
+}
 
