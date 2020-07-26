@@ -37,7 +37,7 @@ class PushandpopController extends Stimulus.Controller {
         imgurl = data[i].imgurl
 
 
-        const html = `<div id=${id} data-controller="draganddrop" class="info" draggable="true" data-action="dragstart->draganddrop#dragStart"><input type="checkbox"/><h2>${id}</h2><h2>${name}</h2><a target="_blank" href=${imgurl}><img src=${imgurl} /></a></div>`
+        const html = `<div id=${id} data-controller="draganddropfrombothsides" class="info" draggable="true" data-action="dragstart->draganddropfrombothsides#dragStart"><input type="checkbox"/><h2>${id}</h2><h2>${name}</h2><a target="_blank" href=${imgurl}><img src=${imgurl} /></a></div>`
 
         this.leftsectionTarget.innerHTML += html
 
