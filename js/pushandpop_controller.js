@@ -11,7 +11,7 @@ class PushandpopController extends Stimulus.Controller {
 
   load() {
     var ourRequest = new XMLHttpRequest();
-    ourRequest.open('GET', 'https://shubham1010.github.io/jsonfiles/ex01.json')
+    ourRequest.open('GET', 'https://shubhamjagdhane.github.io/jsonfiles/ex01.json')
     
     ourRequest.onload = ()=> {
       var data = JSON.parse(ourRequest.responseText)
